@@ -1,0 +1,28 @@
+{
+  "name": "checklist",
+  "version": "0.0.0",
+  "description": "Web application for checklists",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jrpruit1/checklist.git"
+  },
+  "keywords": [
+    "spa",
+    "web-app",
+    "checklist",
+    "project-management"
+  ],
+  "author": "jrpruit1",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jrpruit1/checklist/issues"
+  },
+  "dependencies": {
+    "seneca": "git://github.com/rjrodger/seneca.git",
+    "hapi": "~8.0.0"
+  }
+}
