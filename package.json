@@ -4,7 +4,7 @@
   "description": "Web application for checklists",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "./node_modules/.bin/webdriver-manager update --standalone && ./node_modules/.bin/protractor test/functional/conf.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,8 @@
   "dependencies": {
     "seneca": "git://github.com/rjrodger/seneca.git",
     "hapi": "~8.0.0"
+  },
+  "devDependencies": {
+    "protractor": "~1.5.0"
   }
 }
