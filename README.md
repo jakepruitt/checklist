@@ -50,3 +50,9 @@ UI Pages:
 - list of checklists inside project, should show status in some way (i.e. are all items complete)
 - checklist description, and list of entries in the checklist
 - editor for checklists to add new entries
+
+
+Setup
+-----
+
+Clone the project and run `npm install` to get all of the necessary dependencies. Run `npm start` to start the hapi.js server, and point your browser to `http://localhost:4000` to see the app. While the server is running, you can perform the functionality tests by running `npm test`.
