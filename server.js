@@ -45,6 +45,15 @@ seneca.act('role:web', {use: {
 app.use(seneca.export('web'));
 app.listen(3000);
 
-server.start(function () {
-  console.log('Server running at: %d and %d', server.connections[0].info.port, server.connections[1].info.port);
+api.register({
+  register: require('./hapi-seneca'),
+  options: { seneca: seneca }
+}, function(err) {
+  if (err) {
+    console.error(err);
+  } else {
+    server.start(function () {
+      console.log('Server running at: %d and %d', server.connections[0].info.port, server.connections[1].info.port);
+    });
+  }
 });
