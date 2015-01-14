@@ -6,11 +6,18 @@ var hapiSeneca = {
     debugger;
     seneca.act('role:web, cmd:routes', function(err, routes) {
       console.log(routes);
-      debugger;
+      var testRoute = routes[0];
+      server.route({
+        method: testRoute.method,
+        path: testRoute.url,
+        handler: function(request, reply) {
+          reply('yeah, buddy');
+        }
+      });
     });
     next();
   }
-}
+};
 
 hapiSeneca.register.attributes = {
   name: 'hapi-seneca',
