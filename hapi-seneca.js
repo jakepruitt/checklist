@@ -1,30 +1,30 @@
 var hapiSeneca = {
   register: function (server, options, next) {
-    console.log('Looks like we got registered!');
-    
     var seneca = options.seneca;
-    debugger;
-    seneca.act('role:web, cmd:routes', function(err, routes) {
-      console.log(routes);
-      seneca.act('role:web, cmd:list', function(err, services) {
-        var testRoute = routes.filter(function(route) { 
-          return route.url === '/api/1.0/test' 
-        }).shift(); 
-        console.log(testRoute);
-        var testService = services.filter(function(service) {
-          return service.serviceid$ === testRoute.service.serviceid 
-        }).shift();
-        console.log(testService);
-        server.route({
-          method: testRoute.method,
-          path: testRoute.url,
-          handler: function(req, reply) {
-            console.log('Handler called!');
-            testService(req,reply('Hello world!'),next);
+    
+    server.ext('onRequest', function(request, reply) {
+      var req = request.raw.req;
+      var status = 200;
+      var headers = {};
+      var res = {
+        writeHead: function(resStatus, resHeaders) { 
+          status = resStatus;
+          headers = resHeaders;
+        },
+        end: function(objstr) { 
+          var res = reply(objstr); 
+          res.code(status);
+          for (header in headers) {
+            res.header(header, headers[header]);
           }
-        });
+        }
+      };
+      seneca.export('web')(req, res, function(err) {
+        if (err) { return reply(err); }
+        reply.continue();
       });
     });
+
     next();
   }
 };

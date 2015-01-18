@@ -42,6 +42,7 @@ seneca.act('role:web', {use: {
   }
 }});
 
+//console.log(seneca.export('web/httprouter'));
 app.use(seneca.export('web'));
 app.listen(3000);
 
