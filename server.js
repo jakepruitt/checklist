@@ -1,6 +1,5 @@
 var Hapi = require('hapi');
 var seneca = require('seneca')();
-var app = require('express')();
 
 var server = new Hapi.Server();
 var web = server.connection({ port: 4000 });
@@ -41,10 +40,6 @@ seneca.act('role:web', {use: {
     test: true
   }
 }});
-
-//console.log(seneca.export('web/httprouter'));
-app.use(seneca.export('web'));
-app.listen(3000);
 
 api.register({
   register: require('./hapi-seneca'),
