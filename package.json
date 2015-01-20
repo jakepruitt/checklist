@@ -24,7 +24,11 @@
   },
   "dependencies": {
     "seneca": "~0.5.21",
-    "hapi": "~8.0.0"
+    "hapi": "~8.0.0",
+    "seneca-account": "~0.1.8",
+    "seneca-user": "~0.2.10",
+    "seneca-auth": "~0.2.14",
+    "seneca-project": "~0.1.4"
   },
   "devDependencies": {
     "protractor": "~1.5.0",
