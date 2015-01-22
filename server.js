@@ -22,6 +22,9 @@ web.route({
 
 seneca.use('./server/api.js');
 
+//seneca.use('user');
+//seneca.use('auth', {secure: true});
+
 api.route({
   method: 'GET',
   path: '/',
