@@ -14,7 +14,8 @@ function config($stateProvider, $urlRouterProvider) {
   // Front logged in state of application
   .state('home', {
     templateUrl: 'partials/home.html',
-    url: '/'
+    url: '/',
+    controller: 'HomeController as home'
   });
 }
 
