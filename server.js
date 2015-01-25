@@ -37,7 +37,10 @@ api.route({
 
 api.register({
   register: require('./hapi-seneca'),
-  options: { seneca: seneca }
+  options: { 
+    seneca: seneca,
+    cors: true
+  }
 }, function(err) {
   if (err) {
     console.error(err);

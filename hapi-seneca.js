@@ -4,6 +4,19 @@ var hapiSeneca = {
         status = 200,
         headers = {};
 
+    // Create Hapi Default route handler
+    var handler = function (request, reply) {
+      return reply('The page was not found').code(404);
+    };
+
+    // Allow CORS based on cors option for plugin
+    server.route({ 
+      method: '*', 
+      path: '/{p*}', 
+      handler: handler, 
+      config: { cors: options.cors }
+    });
+    
     server.decorate('reply', 'writeHead', function(resStatus, resHeaders) {
       status = resStatus;
       headers = resHeaders;
