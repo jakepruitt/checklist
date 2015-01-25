@@ -17,9 +17,19 @@ var hapiSeneca = {
         res.header(header, headers[header]);
       }
     });
+
+    server.decorate('reply', 'getHeader', function(headerName) {
+      return headers[headerName];
+    });
+
+    server.decorate('reply', 'setHeader', function(headerName, headerValue) {
+      headers[headerName] = headerValue;
+    });
     
-    server.ext('onRequest', function(request, reply) {
+    server.ext('onPostAuth', function(request, reply) {
       var req = request.raw.req;
+      req.body = request.payload;
+      req.query = request.query;
       seneca.export('web')(req, reply, function(err) {
         if (err) { return reply(err); }
         reply.continue();

@@ -1,1 +1,7 @@
 <h2>This is a login page!</h2>
+
+<form>
+  Username: <input type="text" ng-model="login.user.username"/><br/>
+  Password: <input type="password" ng-model="login.user.password"/><br/>
+  <input type="submit" ng-click="login.login()" value="Log In"/>
+</form>

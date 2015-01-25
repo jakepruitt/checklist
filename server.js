@@ -20,10 +20,12 @@ web.route({
   }
 });
 
+seneca.use('user');
+seneca.use('auth');
 seneca.use('./server/api.js');
 
-//seneca.use('user');
-//seneca.use('auth', {secure: true});
+var user_pin = seneca.pin({role:'user', cmd:'*'});
+
 
 api.route({
   method: 'GET',
@@ -40,8 +42,14 @@ api.register({
   if (err) {
     console.error(err);
   } else {
-    server.start(function () {
-      console.log('Server running at: %d and %d', server.connections[0].info.port, server.connections[1].info.port);
+    user_pin.register({
+      username: 'a1',
+      password: 'a1'
+    }, function(err, out) {
+      server.start(function () {
+        console.log('Server running at: %d and %d', server.connections[0].info.port, server.connections[1].info.port);
+      });
+      console.log(out);
     });
   }
 });
