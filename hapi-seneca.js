@@ -18,6 +18,7 @@ var hapiSeneca = {
     });
     
     server.decorate('reply', 'writeHead', function(resStatus, resHeaders) {
+      console.log(this);
       status = resStatus;
       headers = resHeaders;
     });
@@ -47,6 +48,10 @@ var hapiSeneca = {
         if (err) { return reply(err); }
         reply.continue();
       });
+    });
+
+    server.ext('onPostHandler', function(request, reply) {
+      request.response.header('test-header', 'test-value');
     });
 
     next();
