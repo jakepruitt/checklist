@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('checklist', ['ui.router', 'ngResource']);
+angular.module('checklist', ['ui.router', 'ngResource', 'ngCookies']);
