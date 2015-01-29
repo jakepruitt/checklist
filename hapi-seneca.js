@@ -1,8 +1,41 @@
+/**********************************************
+ * hapi-seneca
+ * -----------
+ *
+ * This module returns a Hapi plugin that
+ * allows seneca-web functionality to work
+ * as expected in the Hapi framework.
+ *
+ * @params
+ *      When used with framework, the options
+ *      object should have the `seneca` option
+ *      referencing the seneca instance that 
+ *      any seneca-web actions have been called
+ *      on.
+ *      The `cors` option should be set to true
+ *      if the API is to be accessed by other
+ *      websites.
+ *
+ * @returns
+ *      A Hapi plugin that can be registered
+ *      to a hapi instance with:
+ *      server.register({
+ *        register: require('./hapi-seneca');
+ *        options: {
+ *          seneca: seneca,
+ *          cors: true
+ *        }
+ *      }, cb);
+ *
+ * Note: most of the logic for this app
+ *      lies in the 'hapi-to-express' module.
+ *********************************************/
+
+var hapiToExpress = require('./hapi-to-express');
+
 var hapiSeneca = {
   register: function (server, options, next) {
-    var seneca = options.seneca,
-        status = 200,
-        headers = {};
+    var seneca = options.seneca;
 
     // Create Hapi Default route handler
     var handler = function (request, reply) {
@@ -17,42 +50,15 @@ var hapiSeneca = {
       config: { cors: options.cors }
     });
     
-    server.decorate('reply', 'writeHead', function(resStatus, resHeaders) {
-      console.log(this);
-      status = resStatus;
-      headers = resHeaders;
-    });
-
-    server.decorate('reply', 'end', function(objstr) {
-      var reply = this,
-          res = reply(objstr);
-      res.code(status);
-      for(header in headers) {
-        res.header(header, headers[header]);
-      }
-    });
-
-    server.decorate('reply', 'getHeader', function(headerName) {
-      return headers[headerName];
-    });
-
-    server.decorate('reply', 'setHeader', function(headerName, headerValue) {
-      headers[headerName] = headerValue;
-    });
-    
     server.ext('onPostAuth', function(request, reply) {
-      var req = request.raw.req;
-      req.body = request.payload;
-      req.query = request.query;
-      seneca.export('web')(req, reply, function(err) {
+      var hapress = hapiToExpress(request, reply);
+
+      seneca.export('web')(hapress.req, hapress.res, function(err) {
         if (err) { return reply(err); }
         reply.continue();
       });
     });
 
-    server.ext('onPostHandler', function(request, reply) {
-      request.response.header('test-header', 'test-value');
-    });
 
     next();
   }
