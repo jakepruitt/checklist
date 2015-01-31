@@ -22,6 +22,7 @@ web.route({
 
 seneca.use('user');
 seneca.use('auth');
+seneca.use('ng-web');
 seneca.use('./server/api.js');
 
 var user_pin = seneca.pin({role:'user', cmd:'*'});

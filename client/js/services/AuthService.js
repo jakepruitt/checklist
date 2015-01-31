@@ -1,30 +1,36 @@
 'use strict';
 
-function AuthService($state, $rootScope, UserService) {
-  var AuthService = {};
+// Factory for authenticating users. Uses the UserService
+function AuthService($state, UserService) {
+  var _userEnt, _loggedIn, AuthService = {};
 
-  AuthService.authorize = function() {
-    console.log(UserService.active())
-    //  .then(function(data) {
-    //  var isAuthenticated = data.ok;
-    //  console.log('UserService Promise success');
+  AuthService.login = function(username, password) {
+    _userEnt = UserService.login({
+      username: username,
+      password: password
+    });
 
-    //  if (!isAuthenticated) {
-    //    $rootScope.returnToState = $rootScope.toState;
-    //    $rootScope.returnToStateParams = $rootScope.toStateParams;
-
-    //    $state.go('login');
-    //  }
-    //}, function(data) {
-    //  console.log('Some sort of failure');
-//      console.log(data);
- //     $rootScope.returnToState = $rootScope.toState;
-  //    $rootScope.returnToStateParams = $rootScope.toStateParams;
-
-   //   $state.go('login');
-    //});
+    _userEnt.$promise.then(function(data) {
+      console.log('success!');
+      console.log('Data:', data);
+      _loggedIn = !!data.ok;
+      if (_loggedIn) {
+        $state.go('home');
+      }
+    }, function(data) {
+      console.log('failure!');
+      console.log('Data:', data);
+    });
   };
-  
+
+  AuthService.current = function() {
+    return _userEnt;
+  };
+
+  AuthService.loggedIn = function() {
+    return _loggedIn;
+  };
+
   return AuthService;
 }
 

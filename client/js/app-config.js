@@ -4,6 +4,15 @@ function config($stateProvider, $urlRouterProvider) {
   // Default route to /
   $urlRouterProvider.otherwise('/');
 
+  // Check route beforehand for authentication
+  $urlRouterProvider.when('/', function(AuthService) {
+    if (!AuthService.loggedIn()) {
+      return '/login'
+    } else {
+      return true
+    }
+  });
+
   $stateProvider
   // Login state for logging users in
   .state('login', {

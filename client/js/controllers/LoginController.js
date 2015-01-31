@@ -1,16 +1,10 @@
 'use strict';
 
-function LoginController($state, UserService) {
+function LoginController($state, AuthService) {
   var login = this;
-  login.user = new UserService();
 
   login.login = function() {
-    login.user.$login(function success(data) {
-      $state.go('home'); 
-    }, function failure(response) {
-      console.log('Recieved:', response);
-      login.errMsg = response.data.why;
-    });
+    AuthService.login(login.username, login.password);
   };
 }
 
