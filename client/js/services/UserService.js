@@ -6,17 +6,17 @@ function UserService($resource) {
     login: { 
       method:'POST', 
       url: 'http://localhost:4040/auth/login',
-      withCredentials: false
+      withCredentials: true
     },
     active: {
       method: 'GET',
       url: 'http://localhost:4040/auth/instance',
-      withCredentials: false
+      withCredentials: true
     },
     register: {
       method: 'POST',
       url: 'http://localhost:4040/auth/register',
-      withCredentials: false
+      withCredentials: true
     }
   });
 }

@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "hapi": "~8.1.0",
-    "hapi-seneca": "^1.0.2",
+    "hapi-seneca": "^1.0.3",
     "seneca": "git://github.com/rjrodger/seneca.git",
     "seneca-account": "^0.1.8",
     "seneca-auth": "git://github.com/rjrodger/seneca-auth.git",
