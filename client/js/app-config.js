@@ -7,9 +7,9 @@ function config($stateProvider, $urlRouterProvider) {
   // Check route beforehand for authentication
   $urlRouterProvider.when('/', function(AuthService) {
     if (!AuthService.loggedIn()) {
-      return '/login'
+      return '/login';
     } else {
-      return true
+      return true;
     }
   });
 
