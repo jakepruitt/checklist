@@ -12,6 +12,11 @@ function UserService($resource) {
       method: 'GET',
       url: 'http://localhost:4040/auth/instance',
       withCredentials: false
+    },
+    register: {
+      method: 'POST',
+      url: 'http://localhost:4040/auth/register',
+      withCredentials: false
     }
   });
 }

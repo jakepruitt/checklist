@@ -14,17 +14,22 @@ function config($stateProvider, $urlRouterProvider) {
   });
 
   $stateProvider
+  // Front logged in state of application
+  .state('home', {
+    templateUrl: 'partials/home.html',
+    url: '/',
+    controller: 'HomeController as home'
+  })
   // Login state for logging users in
   .state('login', {
     templateUrl: 'partials/login.html',
     url: '/login',
     controller: 'LoginController as login'
   })
-  // Front logged in state of application
-  .state('home', {
-    templateUrl: 'partials/home.html',
-    url: '/',
-    controller: 'HomeController as home'
+  .state('register', {
+    templateUrl: 'partials/register.html',
+    url: '/register',
+    controller: 'RegisterController as register'
   });
 }
 

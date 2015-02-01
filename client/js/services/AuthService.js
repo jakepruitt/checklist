@@ -23,12 +23,37 @@ function AuthService($state, UserService) {
     });
   };
 
+  AuthService.register = function(username, password) {
+    _userEnt = UserService.register({
+      username: username,
+      password: password
+    });
+
+    _userEnt.$promise.then(function(data) {
+      console.log('success!');
+      console.log('Data:', data);
+      _loggedIn = !!data.ok;
+      if (_loggedIn) {
+        $state.go('home');
+      }
+    }, function(data) {
+      console.log('failure!');
+      console.log('Data:',data);
+    });
+  };
+
   AuthService.current = function() {
     return _userEnt;
   };
 
   AuthService.loggedIn = function() {
     return _loggedIn;
+  };
+
+  AuthService.logout = function() {
+    _loggedIn = false;
+    _userEnt = null;
+    $state.go('login');
   };
 
   return AuthService;

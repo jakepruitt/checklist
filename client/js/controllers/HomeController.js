@@ -1,11 +1,10 @@
 'use strict';
 
-function HomeController($cookies) {
+function HomeController(AuthService) {
   var home = this;
 
-  home.cookies = $cookies;
-
-  home.testCookies = function() {
+  home.logout = function() {
+    AuthService.logout();
   };
 }
 
