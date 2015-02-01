@@ -26,10 +26,10 @@
     "hapi": "~8.1.0",
     "hapi-seneca": "^1.0.2",
     "seneca": "git://github.com/rjrodger/seneca.git",
-    "seneca-account": "~0.1.8",
+    "seneca-account": "^0.1.8",
     "seneca-auth": "git://github.com/rjrodger/seneca-auth.git",
     "seneca-ng-web": "^0.1.2",
-    "seneca-project": "~0.1.4",
+    "seneca-project": "^0.1.4",
     "seneca-user": "~0.2.10"
   },
   "devDependencies": {
