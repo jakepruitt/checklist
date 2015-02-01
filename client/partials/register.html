@@ -1,0 +1,8 @@
+<h2 class="js-header">This is a register page!</h2>
+
+<form>
+  Username: <input type="text" ng-model="register.username"/><br/>
+  Password: <input type="password" ng-model="register.password"/><br/>
+  <input type="submit" ng-click="register.register()" value="Register"/>
+  <p>{{register.errMsg}}</p>
+</form>

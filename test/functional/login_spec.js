@@ -1,6 +1,4 @@
-console.log(require);
 var LoginPage = require('./fixtures/LoginPage');
-console.log(LoginPage);
 
 describe('login functionality', function() {
   var login = new LoginPage();
