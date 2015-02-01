@@ -1,7 +1,7 @@
 'use strict';
 
 // Factory for authenticating users. Uses the UserService
-function AuthService($state, UserService) {
+function AuthService($state, $q, UserService) {
   var _userEnt, _loggedIn, AuthService = {};
 
   AuthService.login = function(username, password) {
@@ -43,11 +43,18 @@ function AuthService($state, UserService) {
   };
 
   AuthService.current = function() {
-    return _userEnt;
+    return _userEnt || UserService.active(); 
   };
 
   AuthService.loggedIn = function() {
-    return _loggedIn;
+    var promise = $q.defer();
+    if (_loggedIn) {
+      return true;
+    } else {
+      // TODO: Go ahead and implement a promise
+      // check against UserService.active();
+      return false;
+    }
   };
 
   AuthService.logout = function() {
