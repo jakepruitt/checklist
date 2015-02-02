@@ -19,7 +19,7 @@ function UserService($resource) {
       withCredentials: true
     }
   });
-}
+};
 
 angular
   .module('checklist')

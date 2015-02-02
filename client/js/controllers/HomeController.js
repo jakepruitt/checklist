@@ -1,10 +1,8 @@
 'use strict';
 
-function HomeController($cookies, AuthService) {
+function HomeController(AuthService, ProjectService) {
   var home = this;
-
-  home.cookies = $cookies;
-  console.log($cookies);
+  home.projects = [];
 
   home.checkInstance = function() {
     home.user = AuthService.current();
@@ -12,6 +10,18 @@ function HomeController($cookies, AuthService) {
 
   home.logout = function() {
     AuthService.logout();
+  };
+
+  home.newProject = function() {
+    var project = new ProjectService({name: 'Project1'});
+    home.projects.push(project);
+    project.$save();
+  };
+
+  home.getProjects = function() {
+    ProjectService.all(function(data) {
+      home.projects = data;
+    });
   };
 }
 
