@@ -30,6 +30,11 @@ function config($stateProvider, $urlRouterProvider) {
     templateUrl: 'partials/register.html',
     url: '/register',
     controller: 'RegisterController as register'
+  })
+  .state('project', {
+    templateUrl: 'partials/project-detail.html',
+    url: 'project/:projectId',
+    controller: 'ProjectController as project'
   });
 }
 

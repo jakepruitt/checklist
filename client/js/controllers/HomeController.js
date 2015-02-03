@@ -2,7 +2,7 @@
 
 function HomeController(AuthService, ProjectService) {
   var home = this;
-  home.projects = [];
+  home.projects = ProjectService.all();
 
   home.checkInstance = function() {
     home.user = AuthService.current();
@@ -12,10 +12,21 @@ function HomeController(AuthService, ProjectService) {
     AuthService.logout();
   };
 
+  home.projectFormClosed = true;
+
+  home.openProjectForm = function() {
+    home.projectFormClosed = false;
+  };
+
   home.newProject = function() {
-    var project = new ProjectService({name: 'Project1'});
-    home.projects.push(project);
-    project.$save();
+    var project = new ProjectService({
+      name: home.newProjectName
+    });
+    project.$save(function(project) {
+      home.projects.push(project.project); 
+      home.newProjectName = '';
+      home.projectFormClosed = true;
+    });
   };
 
   home.getProjects = function() {
