@@ -14,6 +14,16 @@ module.exports = function(options) {
   seneca.use('project');
   seneca.use('ng-web');
   seneca.use('card');
+  seneca.use('mem-store', {web:{dump:true}});
+
+  seneca.use(
+    { name:'jsonrest-api', tag:'checklist' },
+    {
+      prefix: '/',
+      list: { embed:'list' },
+      pin: { name: 'checklist'},
+      allow_id: true
+    });
 
   // Add all API methods
   seneca.add({ role:plugin, cmd:'project_checklists' }, project_checklists);
@@ -78,6 +88,8 @@ module.exports = function(options) {
   function new_checklist(args, done) {
     var project = args.project,
         title = args.title;
+
+    return done(null, args);
 
     var cardent = this.make$('card/card');
 
