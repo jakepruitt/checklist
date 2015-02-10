@@ -35,6 +35,11 @@ function config($stateProvider, $urlRouterProvider) {
     templateUrl: 'partials/project-detail.html',
     url: 'project/:projectId',
     controller: 'ProjectController as project'
+  })
+  .state('checklist', {
+    templateUrl: 'partials/checklist-detail.html',
+    url: 'checklist/:checklistId',
+    controller: 'ChecklistController as checklist'
   });
 }
 

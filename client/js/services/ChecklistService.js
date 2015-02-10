@@ -17,6 +17,16 @@ function ChecklistService($resource) {
       method: 'POST',
       url: 'http://localhost:4040/checklist/new_checklist',
       withCredentials: true,
+    },
+    load: {
+      method: 'GET',
+      url: 'http://localhost:4040/checklist/load_checklist/:checklist',
+      withCredentials: true,
+      transformResponse: function(response) {
+        response = angular.fromJson(response);
+        response = response.checklist;
+        return response;
+      }
     }
   });
 }
