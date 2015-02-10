@@ -7,16 +7,6 @@ module.exports = function(options) {
     prefix: '/checklist/'
   });
 
-  /*
-  seneca.use(
-    { name:'jsonrest-api', tag:'checklist' },
-    {
-      prefix: options.prefix,
-      list: { embed:'list' },
-      pin: { name: 'checklist'},
-      allow_id: true
-    });
-    */
 
   // Add all API methods
   seneca.add({ role:plugin, cmd:'project_checklists' }, project_checklists);
@@ -24,12 +14,6 @@ module.exports = function(options) {
   seneca.add({ role:plugin, cmd:'new_checklist' }, new_checklist);
   seneca.add({ role:plugin, cmd:'clone_checklist' }, clone_checklist);
   seneca.add({ role:plugin, cmd:'delete_checklist' }, delete_checklist);
-  /*seneca.add({ role:plugin, cmd:'checklist_entries' }, checklist_entries);
-  seneca.add({ role:plugin, cmd:'load_entry' }, load_entry);
-  seneca.add({ role:plugin, cmd:'add_entry' }, add_entry);
-  seneca.add({ role:plugin, cmd:'complete_entry' }, complete_entry);
-  seneca.add({ role:plugin, cmd:'remove_entry' }, remove_entry);
-  */
 
   // Add all necessary routes to REST API
   seneca.act('role: web', { use:{

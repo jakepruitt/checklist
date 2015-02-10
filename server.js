@@ -32,7 +32,6 @@ seneca.use('./server/checklist.js');
 seneca.use('./server/entry.js');
 
 var user_pin = seneca.pin({role:'user', cmd:'*'});
-//console.log(seneca.list());
 var project_pin = seneca.pin({role:'project', cmd:'*'});
 var checklist_pin = seneca.pin({role:'checklist', cmd:'*'});
 var entry_pin = seneca.pin({role:'entry', cmd:'*'});
