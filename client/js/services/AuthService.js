@@ -48,18 +48,29 @@ function AuthService($state, $q, UserService) {
 
   AuthService.loggedIn = function() {
     var promise = $q.defer();
+
     if (_loggedIn) {
       return true;
     } else {
       // TODO: Go ahead and implement a promise
       // check against UserService.active();
-      return false;
+      UserService.active(function(data) {
+        console.log('Cative user called');
+        console.log(data);
+        promise.resolve(data.ok);
+        if (!data.ok) {
+          $state.go('login');
+        }
+      });
     }
+    return promise;
   };
 
   AuthService.logout = function() {
     _loggedIn = false;
     _userEnt = null;
+
+    UserService.logout();
     $state.go('login');
   };
 

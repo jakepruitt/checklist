@@ -23,6 +23,7 @@
     "url": "https://github.com/jrpruit1/checklist/issues"
   },
   "dependencies": {
+    "async": "^0.9.0",
     "hapi": "~8.1.0",
     "hapi-seneca": "^1.0.3",
     "seneca": "git://github.com/rjrodger/seneca.git",

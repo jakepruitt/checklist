@@ -12,6 +12,16 @@ function EntryService($resource) {
         response = response.entries;
         return response;
       }
+    },
+    new_entry: {
+      method: 'POST',
+      url: 'http://localhost:4040/entry/add_entry',
+      withCredentials: true
+    },
+    set_complete: {
+      method: 'POST',
+      url: 'http://localhost:4040/entry/set_complete',
+      withCredentials: true
     }
   });
 };

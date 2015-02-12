@@ -1,7 +1,23 @@
 <h1> Checlist detail page!</h1>
 <h2> checklist title: {{checklist.resource.title}}</h2>
-<ul>
-  <li ng-repeat="entry in checklist.entries">
-    {{ entry.title }}
-  </li>
+<button ng-click="checklist.openEntryForm()">New Entry</button>
+<div collapse="checklist.entryFormClosed">
+  <div class="well">
+    Entry Title: <input type="text" ng-model="checklist.newEntryTitle"/></input>
+    <button ng-click="checklist.newEntry()">Create Entry</button>
+  </div>
+</div>
+<ul class="list-unstyled">
+  <label class="tasks-list-item" ng-repeat="entry in checklist.entries">
+    <input 
+      type="checkbox"
+      name="entry.title"
+      value="1"
+      class="tasks-list-cb" 
+      ng-class="{completed: entry.complete}" 
+      ng-model="entry.complete"
+      ng-click="checklist.saveState(entry)">
+    <span class="tasks-list-mark"></span>
+    <span class="tasks-list-desc">{{ entry.title }}</span>
+  </label>
 </ul>

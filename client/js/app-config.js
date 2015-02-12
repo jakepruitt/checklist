@@ -1,21 +1,34 @@
 'use strict';
 
-function config($stateProvider, $urlRouterProvider) {
+function config($stateProvider, $urlRouterProvider, $locationProvider) {
   // Default route to /
   $urlRouterProvider.otherwise('/');
 
   // Check route beforehand for authentication
-  $urlRouterProvider.when('/', function(AuthService) {
-    if (!AuthService.loggedIn()) {
-      return '/login';
-    } else {
-      return true;
-    }
-  });
+  /*$urlRouterProvider.when('/', function(AuthService) {
+    var authResult;
+    console.log('running auth service check');
+    return AuthService.loggedIn().promise
+    .then(function(ok) {
+      console.log('running promise callback');
+      if (!ok) {
+        console.log('recieved false information');
+        authResult = '/login';
+      } else {
+        console.log('recieved valid information');
+        authResult = true;
+      }
+      return authResult;
+    });
+  });*/
 
   $stateProvider
+  .state('auth', {
+    'abstract': true
+  })
   // Front logged in state of application
   .state('home', {
+    parent: 'auth',
     templateUrl: 'partials/home.html',
     url: '/',
     controller: 'HomeController as home'

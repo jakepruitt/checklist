@@ -1,3 +1,4 @@
+var async = require('async');
 module.exports = function(options) {
   var seneca = this,
       plugin = 'entry';
@@ -9,7 +10,7 @@ module.exports = function(options) {
   seneca.add({ role:plugin, cmd:'checklist_entries' }, checklist_entries);
   seneca.add({ role:plugin, cmd:'load_entry' }, load_entry);
   seneca.add({ role:plugin, cmd:'add_entry' }, add_entry);
-  seneca.add({ role:plugin, cmd:'complete_entry' }, complete_entry);
+  seneca.add({ role:plugin, cmd:'set_complete' }, set_complete);
   seneca.add({ role:plugin, cmd:'remove_entry' }, remove_entry);
   
 
@@ -21,7 +22,7 @@ module.exports = function(options) {
       'checklist_entries':{ GET:true },
       'load_entry':{ GET:true, alias:'load_entry/:entry' },
       'add_entry':{ POST:true },
-      'complete_entry':{ POST:true },
+      'set_complete':{ POST:true },
       'remove_entry':{ POST:true }
     }
   }});
@@ -38,11 +39,19 @@ module.exports = function(options) {
     var cardent = seneca.make$('card/card');
 
     cardent.load$(checklist, function(err, out) {
-      seneca.act('role:card, cmd:children', {card:out}, function(err, card) {
+      if (err) return done(err);
+      async.map(out.children, loadEntry, function(err, children) {
         if (err) return done(err);
 
-        done(null, {entries: card.children});
+        done(null, {entries: children});
       });
+
+      function loadEntry(entry, cb) {
+        seneca.act('role:entry, cmd:load_entry', {entry:entry}, function(err, entry) {
+          if (err) return cb(err);
+          cb(err, entry.entry);
+        });
+      }
     });
   }
 
@@ -79,10 +88,14 @@ module.exports = function(options) {
       if (err) return done(err);
       console.log('made it this far');
 
-      var newEntry = entryent.make$({
+      var newEntry = seneca.make$('card/entry',{
         title: title,
         complete: false,
-        parent: checklist.id
+        parent: checklist
+      });
+      
+      newEntry.data$({
+        complete: false
       });
 
       newEntry.save$(function(err, entry) {
@@ -98,19 +111,20 @@ module.exports = function(options) {
   }
 
   // role: entry,
-  // cmd: complete_entry
+  // cmd: set_complete
   // args:
   //    entry: [String] entry id to be completed
   // action: Marks an entry as complete
-  function complete_entry(args, done) {
+  function set_complete(args, done) {
     var entryId = args.entry;
+    var newComplete = args.complete;
 
     var entryent = this.make$('card/entry');
 
     entryent.load$(entryId, function(err, entry) {
       if (err) return done(err);
 
-      entry.complete = true;
+      entry.complete = newComplete;
       entry.save$(function(err, entry) {
         if (err) return done(err);
 

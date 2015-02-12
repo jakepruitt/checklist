@@ -17,6 +17,11 @@ function UserService($resource) {
       method: 'POST',
       url: 'http://localhost:4040/auth/register',
       withCredentials: true
+    },
+    logout: {
+      method: 'POST',
+      url: 'http://localhost:4040/auth/logout',
+      withCredentials: true
     }
   });
 };
