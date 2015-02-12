@@ -35,11 +35,14 @@ module.exports = function(options) {
   // action: Returns all entries associated with a given project
   function checklist_entries(args, done) {
     var checklist = args.checklist;
+    var cardent = seneca.make$('card/card');
 
-    seneca.act('role:card, cmd:children', {card:{id:checklist}}, function(err, entries) {
-      if (err) return done(err);
+    cardent.load$(checklist, function(err, out) {
+      seneca.act('role:card, cmd:children', {card:out}, function(err, card) {
+        if (err) return done(err);
 
-      done(null, {entries: entries});
+        done(null, {entries: card.children});
+      });
     });
   }
 

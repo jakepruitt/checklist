@@ -9,7 +9,7 @@ function EntryService($resource) {
       isArray: true,
       transformResponse: function(response) {
         response = angular.fromJson(response);
-        response = response.checklists;
+        response = response.entries;
         return response;
       }
     }
