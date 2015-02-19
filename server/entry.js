@@ -146,14 +146,15 @@ module.exports = function(options) {
 
     entryent.load$(entryId, function(err, entry) {
       if (err) return done(err);
-      entry.remove$({id:entryId}, function(err, out) {
-        done(null, {deleted:true});
-      });
       checklistent.load$(entry.parent, function(err, checklist) {
+        if (err) return done(err);
         checklist.children = checklist.children.filter(function(entryIter) {
           return entryIter !== entryId;
         });
         checklist.save$();
+      });
+      entry.remove$({id:entryId}, function(err, out) {
+        done(null, {deleted:true});
       });
     });
   }

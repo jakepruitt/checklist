@@ -70,8 +70,14 @@ function run($rootScope, $urlRouter, $state, AuthService) {
 
     e.preventDefault();
 
-    AuthService.handleLogin().then(function() {
-      $urlRouter.sync();
+    AuthService.handleLogin().then(function(data) {
+      if (!data.ok || !data.user) {
+        return $state.go('login');
+      } else {
+        $urlRouter.sync();
+      }
+    }, function() {
+      $state.go('login');
     });
   });
 

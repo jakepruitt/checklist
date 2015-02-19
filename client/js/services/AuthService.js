@@ -56,11 +56,7 @@ function AuthService($state, $q, UserService) {
   };
 
   AuthService.handleLogin = function() {
-    return UserService.active(function(data) {
-      if (!data.ok || !data.user) {
-        $state.go('login');
-      }
-    }).$promise;
+    return UserService.active().$promise;
   };
 
   AuthService.logout = function() {
