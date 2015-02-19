@@ -144,9 +144,17 @@ module.exports = function(options) {
     var entryent = this.make$('card/entry');
     var checklistent = this.make$('card/card');
 
-    entryent.remove$({id:entryId}, function(err, out) {
+    entryent.load$(entryId, function(err, entry) {
       if (err) return done(err);
-      done(null, {deleted:true});
+      entry.remove$({id:entryId}, function(err, out) {
+        done(null, {deleted:true});
+      });
+      checklistent.load$(entry.parent, function(err, checklist) {
+        checklist.children = checklist.children.filter(function(entryIter) {
+          return entryIter !== entryId;
+        });
+        checklist.save$();
+      });
     });
   }
 };

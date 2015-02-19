@@ -22,7 +22,7 @@
   margin-right: 12px;
   width: 20px;
   height: 20px;
-  border: 2px solid #c4cbd2;
+  border: 2px solid #333;
   border-radius: 12px;
 }
 .tasks-list-mark:before {
@@ -51,7 +51,7 @@
 
 .tasks-list-desc {
   font-weight: bold;
-  color: #8a9a9b;
+  color: #333;
 }
 .tasks-list-cb.completed ~ .tasks-list-desc {
   color: #34bf6e;

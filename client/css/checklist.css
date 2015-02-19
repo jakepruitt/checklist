@@ -3,15 +3,32 @@
   top: 0px;
   bottom: 0px;
   left: 0px;
-  width: 35%;
+  width: 16.666667%;
   max-width: 380px;
   padding: 3rem 2rem;
+  min-width: 226px;
 }
 
 .listing {
-  margin-left: 35%;
-  width: 65%;
+  margin-left: 226px;
+  width: 83.333333%;
   padding-left: 1.5rem;
   max-width: 900px;
   padding-right: 1.5rem;
+}
+
+.login {
+  padding-top: 5%;
+}
+
+.login-panel {
+  max-width: 245px;
+}
+
+.btn-new {
+  margin-top: 15px;
+}
+
+.site-header {
+  cursor: pointer;
 }

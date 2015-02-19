@@ -1,0 +1,23 @@
+<div class="row">
+  <h3 class="col-md-10">Projects</h3>
+  <button ng-click="home.openProjectForm()" class="col-md-2 btn btn-primary btn-new">New Project</button>
+</div>
+<div class="row">
+  <div collapse="home.projectFormClosed">
+    <form class="form-inline well">
+      <div class="form-group">
+        <label for="newProjectName">Project Name:</label>
+        <input type="text" id="newProjectName" class="form-control" ng-model="home.newProjectName"/>
+      </div>
+      <input type="submit" class="btn btn-primary" ng-click="home.newProject()" value="Create Project">
+      <button class="btn btn-default" ng-click="home.closeProjectForm()">Cancel</button>
+    </form>
+  </div>
+  <ul class="list-group">
+    <a class="list-group-item" 
+      ng-repeat="project in home.projects"
+      ui-sref="home.project({ projectId: project.id})">
+      {{project.name}}
+    </a>
+  </ul>
+</div>

@@ -1,22 +1,20 @@
-<div class="masthead">
-  <h1 class="masthead-title">Checklist</h1>
-  <a ui-sref="home">Projects</a>
-  <button ng-click="home.newProject()">New Project</button>
-  <a ng-click="home.logout()">Log Out</a>
-</div>
-<div class="listing">
-  <button ng-click="home.openProjectForm()">New Project</button>
-  <button ng-click="home.getProjects()">Get Projects</button>
-  <div collapse="home.projectFormClosed">
-    <div class="well">
-      Project Name: <input type="text" ng-model="home.newProjectName"/><br/>
-      <button ng-click="home.newProject()">Create Project</button>
+<div class="row">
+  <div class="masthead bg-primary">
+    <div class="page-header">
+      <h1 class="site-header" ui-sref="home.projects">Checklist</h1>
+    </div>
+    <a class="btn btn-default btn-lg btn-block" ui-sref="home.projects">
+      Projects
+    </a>
+    <button class="btn btn-default btn-lg btn-block" ng-click="home.openProjectForm()">
+      New Project
+    </button>
+    <a class="btn btn-primary btn-lg btn-block" ng-click="home.logout()">
+      Log Out
+    </a>
+  </div>
+  <div class="listing row">
+    <div ui-view class="col-md-12">
     </div>
   </div>
-  <h3>Projects</h3>
-  <ul>
-    <li ng-repeat="project in home.projects">
-      <a ui-sref="project({ projectId: project.id})">{{project.name}}</a>
-    </li>
-  </ul>
 </div>

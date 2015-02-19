@@ -1,6 +1,6 @@
 'use strict';
 
-function HomeController(AuthService, ProjectService) {
+function HomeController($state, AuthService, ProjectService) {
   var home = this;
   home.projects = ProjectService.all();
 
@@ -15,7 +15,13 @@ function HomeController(AuthService, ProjectService) {
   home.projectFormClosed = true;
 
   home.openProjectForm = function() {
+    if (!$state.is('home.projects'))
+      $state.go('home.projects');
     home.projectFormClosed = false;
+  };
+
+  home.closeProjectForm = function() {
+    home.projectFormClosed = true;
   };
 
   home.newProject = function() {

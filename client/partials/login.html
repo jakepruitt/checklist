@@ -1,9 +1,20 @@
-<a ui-sref="register">Register</a>
-<h2 class="js-header">This is a login page!</h2>
-
-<form>
-  Username: <input type="text" ng-model="login.username"/><br/>
-  Password: <input type="password" ng-model="login.password"/><br/>
-  <input type="submit" ng-click="login.login()" value="Log In"/>
-  <p>{{login.errMsg}}</p>
-</form>
+<div class="row login">
+  <div class="col-md-12">
+    <div class="center-block panel login-panel panel-default">
+      <form class="panel-body">
+        <div class="form-group">
+          <label for="loginUsername">Username:</label> 
+          <input type="text" id="loginUsername" class="form-control" ng-model="login.username"/>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password:</label>
+          <input type="password" id="loginPassword" class="form-control" ng-model="login.password"/>
+        </div>
+        <input type="submit" class="btn btn-default btn-block btn-primary" ng-click="login.login()" value="Log In"/>
+      </form>
+      <div class="panel-footer">
+        <a ui-sref="register">Register</a>
+      </div>
+    </div>
+  </div>
+</div>

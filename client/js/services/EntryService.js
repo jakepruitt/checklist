@@ -22,6 +22,11 @@ function EntryService($resource) {
       method: 'POST',
       url: 'http://localhost:4040/entry/set_complete',
       withCredentials: true
+    },
+    remove_entry: {
+      method: 'POST',
+      url: 'http://localhost:4040/entry/remove_entry',
+      withCredentials: true
     }
   });
 };

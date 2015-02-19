@@ -15,7 +15,7 @@ function AuthService($state, $q, UserService) {
       console.log('Data:', data);
       _loggedIn = !!data.ok;
       if (_loggedIn) {
-        $state.go('home');
+        $state.go('home.projects');
       }
     }, function(data) {
       console.log('failure!');
@@ -34,7 +34,7 @@ function AuthService($state, $q, UserService) {
       console.log('Data:', data);
       _loggedIn = !!data.ok;
       if (_loggedIn) {
-        $state.go('home');
+        $state.go('home.projects');
       }
     }, function(data) {
       console.log('failure!');
@@ -46,24 +46,21 @@ function AuthService($state, $q, UserService) {
     return _userEnt || UserService.active(); 
   };
 
-  AuthService.loggedIn = function() {
-    var promise = $q.defer();
+  AuthService.isLoggedIn = function() {
 
     if (_loggedIn) {
       return true;
     } else {
-      // TODO: Go ahead and implement a promise
-      // check against UserService.active();
-      UserService.active(function(data) {
-        console.log('Cative user called');
-        console.log(data);
-        promise.resolve(data.ok);
-        if (!data.ok) {
-          $state.go('login');
-        }
-      });
+      return false;
     }
-    return promise;
+  };
+
+  AuthService.handleLogin = function() {
+    return UserService.active(function(data) {
+      if (!data.ok || !data.user) {
+        $state.go('login');
+      }
+    }).$promise;
   };
 
   AuthService.logout = function() {

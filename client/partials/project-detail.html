@@ -1,15 +1,45 @@
-<a ui-sref="home">Go back home</a>
-<h1>Project detail page!</h1>
-<h2>Project Name: {{project.resource.name}}</h2>
-<button ng-click="project.openChecklistForm()">New Checklist</button>
-<div collapse="project.checklistFormClosed">
-  <div class="well">
-    Checklist Title: <input type="text" ng-model="project.newChecklistTitle"/></input>
-    <button ng-click="project.newChecklist()">Create Checklist</button>
-  </div>
+<div class="row">
+  <h3 class="col-md-10">Project: {{project.resource.name}}</h3>
+  <button ng-click="project.openChecklistForm()" class="col-md-2 btn btn-primary btn-new">New Checklist</button>
 </div>
-<ul>
-  <li ng-repeat="checklist in project.checklists">
-    <a ui-sref="checklist({ checklistId: checklist.id })">{{checklist.title}}</a>
-  </li>
-</ul>
+<div class="row">
+  <div collapse="project.checklistFormClosed">
+    <form class="form-inline well">
+      <div class="form-group">
+        <label for="newChecklistTitle">Checklist Title:</label>
+        <input type="text" id="newChecklistTitle" class="form-control" ng-model="project.newChecklistTitle"/>
+      </div>
+      <input type="submit" class="btn btn-primary" ng-click="project.newChecklist()" value="Create Checklist">
+      <button class="btn btn-default" ng-click="project.closeChecklistForm()">Cancel</button>
+    </form>
+  </div>
+  <ul class="list-group">
+    <li 
+      class="list-group-item" 
+      ng-repeat="checklistIter in project.checklists"
+      ng-controller="ChecklistController as checklist"> 
+      <h3>{{checklistIter.title}}</h3>
+      <ul class="list-unstyled">
+        <label class="tasks-list-item" ng-repeat="entry in checklist.entries">
+          <input 
+            type="checkbox"
+            name="entry.title"
+            value="1"
+            class="tasks-list-cb" 
+            ng-class="{completed: entry.complete}" 
+            ng-model="entry.complete"
+            ng-click="checklist.saveState(entry)">
+          <span class="tasks-list-mark"></span>
+          <span class="tasks-list-desc">{{ entry.title }}</span>
+          <button type="button" class="close" aria-label="Close" ng-click="checklist.removeEntry($index)"><span aria-hidden="true">&times;</span></button>
+        </label>
+        <form class="tasks-list-item form-inline" ng-hide="checklist.entryFormClosed">
+          <span class="tasks-list-mark"></span>
+          <input class="form-control" type="text" ng-model="checklist.newEntryTitle"/></input>
+          <input type="submit" class="hidden" ng-click="checklist.newEntry()"/></input>
+        </form>
+      </ul>
+      <button class="btn btn-success" ng-click="checklist.openEntryForm()">New Entry</button>
+    </li>
+  </ul>
+</div>

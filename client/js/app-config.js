@@ -8,7 +8,7 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
   /*$urlRouterProvider.when('/', function(AuthService) {
     var authResult;
     console.log('running auth service check');
-    return AuthService.loggedIn().promise
+    AuthService.loggedIn().promise
     .then(function(ok) {
       console.log('running promise callback');
       if (!ok) {
@@ -20,18 +20,25 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
       }
       return authResult;
     });
+    //return true;
   });*/
 
+  // Prevent $urlRouter from automatically intercepting URL changes;  
+  // this allows you to configure custom behavior in between  
+  // location changes and route synchronization:  
+  $urlRouterProvider.deferIntercept();
+
   $stateProvider
-  .state('auth', {
-    'abstract': true
-  })
   // Front logged in state of application
   .state('home', {
-    parent: 'auth',
     templateUrl: 'partials/home.html',
-    url: '/',
+    /*url: '/',*/
+    'abstract': true,
     controller: 'HomeController as home'
+  })
+  .state('home.projects', {
+    templateUrl: 'partials/projects.html',
+    url:'/',
   })
   // Login state for logging users in
   .state('login', {
@@ -44,18 +51,34 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
     url: '/register',
     controller: 'RegisterController as register'
   })
-  .state('project', {
+  .state('home.project', {
     templateUrl: 'partials/project-detail.html',
     url: 'project/:projectId',
     controller: 'ProjectController as project'
-  })
-  .state('checklist', {
+  });
+  /*.state('home.checklist', {
     templateUrl: 'partials/checklist-detail.html',
     url: 'checklist/:checklistId',
     controller: 'ChecklistController as checklist'
+  });*/
+}
+
+function run($rootScope, $urlRouter, $state, AuthService) {
+  $rootScope.$on('$locationChangeSuccess', function(e) {
+    if (AuthService.isLoggedIn()) return;
+    if ($state.is('register')) return;
+
+    e.preventDefault();
+
+    AuthService.handleLogin().then(function() {
+      $urlRouter.sync();
+    });
   });
+
+  $urlRouter.listen();
 }
 
 angular
   .module('checklist')
-  .config(config);
+  .config(config)
+  .run(run);
