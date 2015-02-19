@@ -34,7 +34,7 @@
   margin: -4px 0 0 -6px;
   height: 8px;
   width: 12px;
-  border: solid #39ca74;
+  border: solid #5CB85C;
   border-width: 0 0 4px 4px;
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
@@ -43,7 +43,7 @@
   transform: rotate(-45deg);
 }
 .tasks-list-cb.completed ~ .tasks-list-mark {
-  border-color: #39ca74;
+  border-color: #5CB85C;
 }
 .tasks-list-cb.completed ~ .tasks-list-mark:before {
   display: block;
@@ -54,6 +54,6 @@
   color: #333;
 }
 .tasks-list-cb.completed ~ .tasks-list-desc {
-  color: #34bf6e;
+  color: #4CAE4C;
   text-decoration: line-through;
 }

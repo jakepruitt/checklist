@@ -1,12 +1,23 @@
 <div class="row">
-  <h3 class="col-md-10">Project: {{project.resource.name}}</h3>
+  <h3 class="col-md-7">Project: {{project.resource.name}}</h3>
   <button ng-click="project.openChecklistForm()" class="col-md-2 btn btn-primary btn-new">New Checklist</button>
+  <div class="btn-group col-md-3 btn-new" dropdown is-open="status.isopen">
+    <button type="button" class="btn btn-success dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+      Clone Checklist <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li ng-repeat="checklist in project.checklists">
+        <a ng-click="project.openCloneForm(checklist.title)">{{checklist.title}}</a>
+      </li>
+    </ul>
+  </div>
 </div>
 <div class="row">
   <div collapse="project.checklistFormClosed">
     <form class="form-inline well">
       <div class="form-group">
-        <label for="newChecklistTitle">Checklist Title:</label>
+        <label ng-hide="project.cloning" for="newChecklistTitle">Checklist Title:</label>
+        <label ng-show="project.cloning" for="newChecklistTitle">Cloning Checklist ({{project.cloneTitle}}): </label>
         <input type="text" id="newChecklistTitle" class="form-control" ng-model="project.newChecklistTitle"/>
       </div>
       <input type="submit" class="btn btn-primary" ng-click="project.newChecklist()" value="Create Checklist">

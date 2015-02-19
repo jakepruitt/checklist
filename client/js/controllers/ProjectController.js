@@ -12,6 +12,16 @@ function ProjectController($state, ProjectService, ChecklistService) {
   project.openChecklistForm = function() {
     project.checklistFormClosed = false;
   };
+
+  project.closeChecklistForm = function() {
+    project.checklistFormClosed = true;
+  };
+
+  project.openCloneForm = function(title) {
+    project.checklistFormClosed = false;
+    project.cloning = true;
+    project.cloneTitle = title;
+  };
   
   project.checklists = ChecklistService.project_checklists({
     project: $state.params.projectId
