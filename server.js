@@ -40,7 +40,7 @@ api.route({
   method: 'GET',
   path: '/',
   handler: function(request, reply) {
-    reply('There is always money in the banana boat');
+    reply('There is always money in the banana stand');
   }
 });
 
